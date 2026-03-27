@@ -11,7 +11,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
+    <ProjectReference Include="..\MarketPrices.Application\MarketPrices.Application.csproj" />
+    <ProjectReference Include="..\MarketPrices.Infrastructure\MarketPrices.Infrastructure.csproj" />
+    <ProjectReference Include="..\MarketPrices.Presentation\MarketPrices.Presentation.csproj" />
   </ItemGroup>
 
 </Project>

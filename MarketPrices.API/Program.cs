@@ -1,14 +1,28 @@
+using MarketPrices.Application;
+using MarketPrices.Infrastructure;
+using MarketPrices.Presentation;
+using Serilog;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+var configuration = builder.Configuration;
 
-builder.Services.AddControllers();
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+
+var presentationAssembly = typeof(AssemblyReference).Assembly;
+builder.Services.AddControllers().AddApplicationPart(presentationAssembly);
+
+builder.Services
+    .AddApplication()
+    .AddInfrastructure(configuration.GetConnectionString("DefaultConnection"));
+
+builder.Host.UseSerilog((context, config) =>
+{
+    config.ReadFrom.Configuration(configuration);
+});
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();

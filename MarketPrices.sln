@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarketPrices.Infrastructure
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarketPrices.Application", "MarketPrices.Application\MarketPrices.Application.csproj", "{C698F138-BED1-4390-B18E-D162347648EC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarketPrices.Presentation", "MarketPrices.Presentation\MarketPrices.Presentation.csproj", "{5AC84EBC-7B18-4FD7-A9AB-2A1039F1DA2B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{C698F138-BED1-4390-B18E-D162347648EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C698F138-BED1-4390-B18E-D162347648EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C698F138-BED1-4390-B18E-D162347648EC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5AC84EBC-7B18-4FD7-A9AB-2A1039F1DA2B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5AC84EBC-7B18-4FD7-A9AB-2A1039F1DA2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5AC84EBC-7B18-4FD7-A9AB-2A1039F1DA2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5AC84EBC-7B18-4FD7-A9AB-2A1039F1DA2B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -7,12 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.4" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.3.9" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\MarketPrices.Application\MarketPrices.Application.csproj" />
-    <ProjectReference Include="..\MarketPrices.Domain\MarketPrices.Domain.csproj" />
   </ItemGroup>
 
 </Project>
