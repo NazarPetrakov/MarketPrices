@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 
 namespace MarketPrices.Infrastructure.Fintacharts
 {
-    public class FintachartsHttpClient
+    public class FintachartsHttpClient : IFintachartsHttpClient
     {
         private readonly HttpClient _client;
 
@@ -14,18 +14,20 @@ namespace MarketPrices.Infrastructure.Fintacharts
         }
 
         public async Task<InstrumentsResponse> GetAllInstrumentsAsync()
+        public async Task<IEnumerable<Instrument>> GetInstrumentsAsync()
         {
             var totalInstrumentsCount = await GetInstrumentsCountAsync();
 
-            var queryParams = new InstrumentsQueryParams(1, totalInstrumentsCount);
+            var queryParams = new InstrumentsQueryParams(1, totalInstrumentsCount, "simulation");
 
-            var response = await _client.GetAsync("/api/instruments/v1/instruments" + queryParams.ToString());
-            response.EnsureSuccessStatusCode();
+            var instrumentsResponse = await GetDeserializedAsync<InstrumentsResponse>(
+                "/api/instruments/v1/instruments" + queryParams.ToString());
 
-            var content = await response.Content.ReadAsStringAsync();
-
-            var instruments = JsonConvert.DeserializeObject<InstrumentsResponse>(content)
-                ?? throw new JsonException("Instruments deserialization returned null.");
+            var instruments = instrumentsResponse.Data.Select(i => new Instrument(
+                i.Id,
+                i.Symbol ?? "",
+                i.Description ?? ""
+            ));
 
             return instruments;
         }
@@ -34,15 +36,23 @@ namespace MarketPrices.Infrastructure.Fintacharts
         {
             var queryParams = new InstrumentsQueryParams(1, 1);
 
-            var response = await _client.GetAsync("/api/instruments/v1/instruments" + queryParams.ToString());
+            var pagination = await GetDeserializedAsync<PaginationResponse>(
+                "/api/instruments/v1/instruments" + queryParams.ToString());
+
+            return pagination.Paging.Items;
+        }
+
+        private async Task<T> GetDeserializedAsync<T>(string requestUri)
+        {
+            var response = await _client.GetAsync(requestUri);
             response.EnsureSuccessStatusCode();
 
             var content = await response.Content.ReadAsStringAsync();
 
-            var pagination = JsonConvert.DeserializeObject<PaginationResponse>(content)
+            var desObject = JsonConvert.DeserializeObject<T>(content)
                 ?? throw new JsonException("Pagination deserialization returned null.");
 
-            return pagination.Paging.Items;
+            return desObject;
         }
     }
 }
