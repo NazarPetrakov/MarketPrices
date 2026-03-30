@@ -6,7 +6,14 @@ namespace MarketPrices.Infrastructure.Fintacharts.Instument
     {
         public List<InstrumentResponse> Data { get; set; } = [];
     }
-    public record InstrumentResponse(string Id, string Symbol, string Description)
+    public record InstrumentResponse(
+        Guid Id,
+        string? Symbol,
+        string? Kind,
+        string? Description,
+        string? Currency,
+        string? BaseCurrency,
+        int? ContractSize)
     {
     }
 }

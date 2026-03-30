@@ -20,6 +20,13 @@ namespace MarketPrices.Infrastructure
                 client.BaseAddress = new Uri(options.BaseUrl);
             });
 
+            services.AddScoped<IAssetsRepository, AssetsRepository>();
+
+            services.AddSingleton<IPriceStore, PriceStore>();
+            services.AddSingleton<PriceListener>();
+            services.AddSingleton<IPriceSubscription>(sp => sp.GetRequiredService<PriceListener>());
+            services.AddHostedService(sp => sp.GetRequiredService<PriceListener>());
+
             return services;
         }
     }
