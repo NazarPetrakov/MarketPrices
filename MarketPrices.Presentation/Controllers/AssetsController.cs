@@ -1,4 +1,5 @@
 ﻿using MarketPrices.Application.Assets.Queries.GetAssets;
+using MarketPrices.Application.Prices.Queries.GetPrice;
 using MarketPrices.Domain.Common.Assets;
 using MarketPrices.Domain.Common.Pagination;
 using MarketPrices.Presentation.Extensions;
@@ -22,6 +23,12 @@ namespace MarketPrices.Presentation.Controllers
             return Ok(assets);
         }
 
+        [HttpGet("{id}/price")]
+        public async Task<IActionResult> GetPrice(Guid id)
+        {
+            var price = await Sender.Send(new GetPriceQuery(id));
 
+            return Ok(price);
+        }
     }
 }

@@ -1,5 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using MarketPrices.Application.Abstracts;
+using MarketPrices.Domain.Abstracts;
+using MarketPrices.Infrastructure.Fintacharts;
+using MarketPrices.Infrastructure.Fintacharts.WebSockets;
+using MarketPrices.Infrastructure.Options;
+using MarketPrices.Infrastructure.Repositories;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 
 namespace MarketPrices.Infrastructure
 {
@@ -14,7 +22,7 @@ namespace MarketPrices.Infrastructure
             services.Configure<FintachartsOptions>(configuration.GetSection(FintachartsOptions.SectionName));
 
             services.AddHttpClient<IFintachartsHttpClient, FintachartsHttpClient>((serviceProvider, client) =>
-        {
+            {
                 var options = serviceProvider.GetRequiredService<IOptions<FintachartsOptions>>().Value;
 
                 client.BaseAddress = new Uri(options.BaseUrl);

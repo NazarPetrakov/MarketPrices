@@ -16,4 +16,8 @@
     <ProjectReference Include="..\MarketPrices.Domain\MarketPrices.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Prices\Commands\" />
+  </ItemGroup>
+
 </Project>
