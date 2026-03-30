@@ -6,13 +6,18 @@ namespace MarketPrices.Infrastructure
     public static class DependencyInjection
     {
         public static IServiceCollection AddInfrastructure(
-            this IServiceCollection services, string? connectionString)
+            this IServiceCollection services, IConfiguration configuration)
+        {
+            services.AddDbContext<AppDbContext>(conf => conf.UseNpgsql(configuration
+                .GetConnectionString(ConnectionStrings.DefaultConnection)));
+
             services.Configure<FintachartsOptions>(configuration.GetSection(FintachartsOptions.SectionName));
 
-            services.AddHttpClient<FintachartsHttpClient>(client =>
+            services.AddHttpClient<IFintachartsHttpClient, FintachartsHttpClient>((serviceProvider, client) =>
         {
-                client.BaseAddress = new Uri(configuration.GetSection(FintachartsOptions.SectionName)
-                    .Get<FintachartsOptions>()?.BaseUrl ?? "https://platform.fintacharts.com");
+                var options = serviceProvider.GetRequiredService<IOptions<FintachartsOptions>>().Value;
+
+                client.BaseAddress = new Uri(options.BaseUrl);
             });
 
             return services;

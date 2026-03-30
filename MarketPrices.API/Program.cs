@@ -14,7 +14,7 @@ builder.Services.AddControllers().AddApplicationPart(presentationAssembly);
 
 builder.Services
     .AddApplication()
-    .AddInfrastructure(configuration.GetConnectionString("DefaultConnection"));
+    .AddInfrastructure(configuration);
 
 builder.Host.UseSerilog((context, config) =>
 {
