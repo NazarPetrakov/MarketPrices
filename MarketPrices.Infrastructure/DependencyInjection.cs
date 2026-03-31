@@ -1,6 +1,6 @@
 ﻿using MarketPrices.Application.Abstracts;
-using MarketPrices.Domain.Abstracts;
 using MarketPrices.Infrastructure.Fintacharts;
+using MarketPrices.Infrastructure.Fintacharts.Services;
 using MarketPrices.Infrastructure.Fintacharts.WebSockets;
 using MarketPrices.Infrastructure.Options;
 using MarketPrices.Infrastructure.Repositories;
@@ -21,7 +21,7 @@ namespace MarketPrices.Infrastructure
 
             services.Configure<FintachartsOptions>(configuration.GetSection(FintachartsOptions.SectionName));
 
-            services.AddHttpClient<IFintachartsHttpClient, FintachartsHttpClient>((serviceProvider, client) =>
+            services.AddHttpClient<FintachartsHttpClient>((serviceProvider, client) =>
             {
                 var options = serviceProvider.GetRequiredService<IOptions<FintachartsOptions>>().Value;
 
@@ -29,6 +29,8 @@ namespace MarketPrices.Infrastructure
             });
 
             services.AddScoped<IAssetsRepository, AssetsRepository>();
+            services.AddScoped<IFintachartsService, FintachartsService>();
+
 
             services.AddSingleton<IPriceStore, PriceStore>();
             services.AddSingleton<PriceListener>();

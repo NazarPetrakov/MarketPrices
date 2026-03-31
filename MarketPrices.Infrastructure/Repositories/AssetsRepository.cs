@@ -1,6 +1,6 @@
-﻿using MarketPrices.Application.Common.Pagination;
-using MarketPrices.Domain.Abstracts;
-using MarketPrices.Domain.Common.Assets;
+﻿using MarketPrices.Application.Abstracts;
+using MarketPrices.Application.Assets.Queries.GetAssets;
+using MarketPrices.Application.Common.Pagination;
 using MarketPrices.Domain.Common.Pagination;
 using MarketPrices.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -16,11 +16,11 @@ namespace MarketPrices.Infrastructure.Repositories
             _dbContext = dbContext;
         }
 
-        public async Task<PaginationList<Asset>> GetAllFilteredAsync(AssetsQueryParams queryParams, CancellationToken ct = default)
+        public async Task<PaginationList<Asset>> GetAllFilteredAsync(AssetFilter filter, CancellationToken ct = default)
         {
             var assets = _dbContext.Assets.AsQueryable();
 
-            return await assets.ToPaginatingListAsync(queryParams.PageNumber, queryParams.PageSize, ct);
+            return await assets.ToPaginatingListAsync(filter.PageNumber, filter.PageSize, ct);
         }
 
         public async Task<List<Asset>> GetAllAsync(CancellationToken ct = default)

@@ -1,5 +1,4 @@
 ﻿using MarketPrices.Application.Abstracts;
-using MarketPrices.Domain.Abstracts;
 using MarketPrices.Domain.Entities;
 using MediatR;
 
@@ -7,18 +6,18 @@ namespace MarketPrices.Application.Assets.Commands.SeedAssets
 {
     internal class SeedAssetsCommandHandler : IRequestHandler<SeedAssetsCommand>
     {
-        private readonly IFintachartsHttpClient _htppClient;
+        private readonly IFintachartsService _fintachartsService;
         private readonly IAssetsRepository _repository;
 
-        public SeedAssetsCommandHandler(IFintachartsHttpClient htppClient, IAssetsRepository repository)
+        public SeedAssetsCommandHandler(IFintachartsService fintachartsService, IAssetsRepository repository)
         {
-            _htppClient = htppClient;
+            _fintachartsService = fintachartsService;
             _repository = repository;
         }
 
         public async Task Handle(SeedAssetsCommand request, CancellationToken cancellationToken)
         {
-            var instruments = await _htppClient.GetInstrumentsAsync();
+            var instruments = await _fintachartsService.GetSimulationInstrumentsAsync();
 
             var assets = instruments.Select(i => new Asset(i.Id, i.Symbol, i.Description));
 

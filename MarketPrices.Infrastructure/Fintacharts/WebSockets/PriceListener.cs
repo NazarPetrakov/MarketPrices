@@ -1,4 +1,5 @@
 ﻿using MarketPrices.Application.Abstracts;
+using MarketPrices.Application.Models.Fintacharts;
 using MarketPrices.Infrastructure.Fintacharts.Price;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -102,7 +103,7 @@ namespace MarketPrices.Infrastructure.Fintacharts.WebSockets
                         && price.Ask is not null
                         && price.Type == "l1-update")
                 {
-                    _priceStore.UpdatePrice(price.InstrumentId.ToString(), price.Ask.Price);
+                    _priceStore.UpdatePrice(price.InstrumentId.ToString(), new PriceInfo(price.Ask.Price, price.Ask.Timestamp));
                 }
             }
         }

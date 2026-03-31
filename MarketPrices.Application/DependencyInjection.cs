@@ -1,4 +1,3 @@
-﻿using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace MarketPrices.Application
@@ -13,8 +12,6 @@ namespace MarketPrices.Application
             {
                 configuration.RegisterServicesFromAssembly(assembly);
             });
-
-            services.AddValidatorsFromAssembly(assembly);
 
             return services;
         }

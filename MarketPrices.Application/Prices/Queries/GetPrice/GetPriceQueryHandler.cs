@@ -30,6 +30,8 @@ namespace MarketPrices.Application.Prices.Queries.GetPrice
             }
 
             return new PriceResponse(id, price.Value);
+            var value = priceInfo.Value;
+            return new PriceResponse(id, value.Price, value.Timestamp);
         }
     }
 }

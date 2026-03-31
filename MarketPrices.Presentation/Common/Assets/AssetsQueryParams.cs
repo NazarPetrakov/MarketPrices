@@ -1,6 +1,6 @@
 ﻿using MarketPrices.Domain.Common.Pagination;
 
-namespace MarketPrices.Domain.Common.Assets
+namespace MarketPrices.Presentation.Common.Assets
 {
     public class AssetsQueryParams : PaginationQueryParams
     {

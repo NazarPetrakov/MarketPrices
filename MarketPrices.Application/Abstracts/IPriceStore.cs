@@ -1,9 +1,11 @@
-﻿namespace MarketPrices.Application.Abstracts
+﻿using MarketPrices.Application.Models.Fintacharts;
+
+namespace MarketPrices.Application.Abstracts
 {
     public interface IPriceStore
     {
-        decimal? GetPrice(string instrumentId);
-        void UpdatePrice(string instrumentId, decimal price);
+        PriceInfo? GetPrice(string instrumentId);
+        void UpdatePrice(string instrumentId, PriceInfo price);
         void Touch(string instrumentId);
         bool IsTracked(string instrumentId);
         IEnumerable<string> GetStale(TimeSpan ttl);

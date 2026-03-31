@@ -1,10 +1,10 @@
-﻿using MarketPrices.Infrastructure.Fintacharts.Common;
-using MarketPrices.Infrastructure.Fintacharts.Instument;
+﻿using MarketPrices.Infrastructure.Fintacharts.Instument;
+using MarketPrices.Infrastructure.Fintacharts.Price;
 using Newtonsoft.Json;
 
 namespace MarketPrices.Infrastructure.Fintacharts
 {
-    public class FintachartsHttpClient : IFintachartsHttpClient
+    internal class FintachartsHttpClient
     {
         private readonly HttpClient _client;
 
@@ -13,33 +13,16 @@ namespace MarketPrices.Infrastructure.Fintacharts
             _client = client;
         }
 
-        public async Task<InstrumentsResponse> GetAllInstrumentsAsync()
-        public async Task<IEnumerable<Instrument>> GetInstrumentsAsync()
+        public async Task<PriceBarResponse> GetCountBackAsync(CountBackQueryParams countBackQueryParams)
         {
-            var totalInstrumentsCount = await GetInstrumentsCountAsync();
-
-            var queryParams = new InstrumentsQueryParams(1, totalInstrumentsCount, "simulation");
-
-            var instrumentsResponse = await GetDeserializedAsync<InstrumentsResponse>(
-                "/api/instruments/v1/instruments" + queryParams.ToString());
-
-            var instruments = instrumentsResponse.Data.Select(i => new Instrument(
-                i.Id,
-                i.Symbol ?? "",
-                i.Description ?? ""
-            ));
-
-            return instruments;
+            return await GetDeserializedAsync<PriceBarResponse>(
+                "/api/bars/v1/bars/count-back" + countBackQueryParams.ToString());
         }
 
-        private async Task<int> GetInstrumentsCountAsync()
+        public async Task<InstrumentsResponse> GetInstrumentsAsync(InstrumentsQueryParams instrumentsQueryParams)
         {
-            var queryParams = new InstrumentsQueryParams(1, 1);
-
-            var pagination = await GetDeserializedAsync<PaginationResponse>(
-                "/api/instruments/v1/instruments" + queryParams.ToString());
-
-            return pagination.Paging.Items;
+            return await GetDeserializedAsync<InstrumentsResponse>(
+                "/api/instruments/v1/instruments" + instrumentsQueryParams.ToString());
         }
 
         private async Task<T> GetDeserializedAsync<T>(string requestUri)

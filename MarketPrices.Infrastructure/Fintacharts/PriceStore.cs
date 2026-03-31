@@ -1,16 +1,17 @@
 ﻿using MarketPrices.Application.Abstracts;
+using MarketPrices.Application.Models.Fintacharts;
 using System.Collections.Concurrent;
 
 namespace MarketPrices.Infrastructure.Fintacharts
 {
     internal class PriceStore : IPriceStore
     {
-        private readonly ConcurrentDictionary<string, decimal> _prices = new();
+        private readonly ConcurrentDictionary<string, PriceInfo> _prices = new();
         private readonly ConcurrentDictionary<string, DateTime> _lastAccessed = new();
 
-        public decimal? GetPrice(string instrumentId)
+        public PriceInfo? GetPrice(string instrumentId)
         {
-            if (_prices.TryGetValue(instrumentId, out decimal price))
+            if (_prices.TryGetValue(instrumentId, out PriceInfo price))
             {
                 _lastAccessed[instrumentId] = DateTime.UtcNow;
                 return price;
@@ -18,7 +19,7 @@ namespace MarketPrices.Infrastructure.Fintacharts
             return null;
         }
 
-        public void UpdatePrice(string instrumentId, decimal price)
+        public void UpdatePrice(string instrumentId, PriceInfo price)
         {
             _prices[instrumentId] = price;
         }
