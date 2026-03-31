@@ -81,7 +81,7 @@ namespace MarketPrices.Infrastructure.Fintacharts.WebSockets
                 && _wsClient!.State == WebSocketState.Open)
             {
                 var pingMessage = new { type = "ping" };
-                _logger.LogInformation("Sending ping to keep WebSocket connection alive.");
+                _logger.LogDebug("Sending ping to keep WebSocket connection alive.");
                 await SendAsync(pingMessage);
                 await Task.Delay(TimeSpan.FromSeconds(60), stoppingToken);
             }
@@ -96,7 +96,7 @@ namespace MarketPrices.Infrastructure.Fintacharts.WebSockets
                 var result = await _wsClient.ReceiveAsync(buffer, ct);
 
                 var message = Encoding.UTF8.GetString(buffer, 0, result.Count);
-                _logger.LogInformation("Received message: {Message}", message);
+                _logger.LogDebug("Received message: {Message}", message);
 
                 var price = JsonConvert.DeserializeObject<PriceAskResponse>(message);
                 if (price is not null
@@ -134,7 +134,7 @@ namespace MarketPrices.Infrastructure.Fintacharts.WebSockets
                 ContractResolver = new CamelCasePropertyNamesContractResolver()
             });
 
-            _logger.LogInformation("Sent message: {Message}", json);
+            _logger.LogDebug("Sent message: {Message}", json);
 
             var buffer = Encoding.UTF8.GetBytes(json);
 

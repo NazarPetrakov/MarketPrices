@@ -6,9 +6,21 @@ services:
     ports:
       - 5432:5432
     environment:
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      - POSTGRES_PASSWORD=password
     volumes:
       - postVolume:/var/lib/postgresql
+
+  backend:
+    image: backend
+    build:
+      context: .
+    restart: always
+    environment:
+      - ConnectionStrings__DefaultConnection=User ID=postgres;Password=password;Host=db;Port=5432;Database=marketDb;
+    ports:
+      - 80:8080
+    depends_on:
+      - db
 
   adminer:
     image: adminer
