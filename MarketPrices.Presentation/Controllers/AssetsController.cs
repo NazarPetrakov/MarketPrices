@@ -1,5 +1,5 @@
-﻿using MarketPrices.Application.Assets.Queries.GetAssets;
-using MarketPrices.Application.Prices.Queries.GetPrice;
+﻿using MarketPrices.Application.UseCases.Assets.Queries.GetAssets;
+using MarketPrices.Application.UseCases.Prices.Queries.GetPrice;
 using MarketPrices.Domain.Common.Pagination;
 using MarketPrices.Presentation.Common.Assets;
 using MarketPrices.Presentation.Extensions;

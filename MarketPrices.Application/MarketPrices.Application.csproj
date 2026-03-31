@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="12.1.1" />
     <PackageReference Include="MediatR" Version="14.1.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.14" />
   </ItemGroup>
@@ -17,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Prices\Commands\" />
+    <Folder Include="UseCases\Prices\Commands\" />
   </ItemGroup>
 
 </Project>

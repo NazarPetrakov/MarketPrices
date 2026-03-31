@@ -1,4 +1,4 @@
-﻿using MarketPrices.Application.Assets.Queries.GetAssets;
+﻿using MarketPrices.Application.UseCases.Assets.Queries.GetAssets;
 using MarketPrices.Domain.Common.Pagination;
 using MarketPrices.Domain.Entities;
 

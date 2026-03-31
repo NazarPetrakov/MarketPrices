@@ -1,6 +1,6 @@
 ﻿using MarketPrices.Application.Abstracts;
-using MarketPrices.Application.Assets.Queries.GetAssets;
 using MarketPrices.Application.Common.Pagination;
+using MarketPrices.Application.UseCases.Assets.Queries.GetAssets;
 using MarketPrices.Domain.Common.Pagination;
 using MarketPrices.Domain.Entities;
 using Microsoft.EntityFrameworkCore;

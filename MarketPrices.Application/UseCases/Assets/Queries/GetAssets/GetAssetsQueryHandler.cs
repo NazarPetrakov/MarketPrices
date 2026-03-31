@@ -3,7 +3,7 @@ using MarketPrices.Application.Common.Pagination;
 using MarketPrices.Domain.Common.Pagination;
 using MediatR;
 
-namespace MarketPrices.Application.Assets.Queries.GetAssets
+namespace MarketPrices.Application.UseCases.Assets.Queries.GetAssets
 {
     internal class GetAssetsQueryHandler : IRequestHandler<GetAssetsQuery, PaginationList<AssetResponse>>
     {

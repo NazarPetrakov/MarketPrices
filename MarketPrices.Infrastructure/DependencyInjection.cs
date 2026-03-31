@@ -31,7 +31,6 @@ namespace MarketPrices.Infrastructure
             services.AddScoped<IAssetsRepository, AssetsRepository>();
             services.AddScoped<IFintachartsService, FintachartsService>();
 
-
             services.AddSingleton<IPriceStore, PriceStore>();
             services.AddSingleton<PriceListener>();
             services.AddSingleton<IPriceSubscription>(sp => sp.GetRequiredService<PriceListener>());

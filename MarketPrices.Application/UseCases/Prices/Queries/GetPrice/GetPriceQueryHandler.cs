@@ -1,7 +1,7 @@
 ﻿using MarketPrices.Application.Abstracts;
 using MediatR;
 
-namespace MarketPrices.Application.Prices.Queries.GetPrice
+namespace MarketPrices.Application.UseCases.Prices.Queries.GetPrice
 {
     internal class GetPriceQueryHandler : IRequestHandler<GetPriceQuery, PriceResponse>
     {
@@ -19,7 +19,7 @@ namespace MarketPrices.Application.Prices.Queries.GetPrice
         public async Task<PriceResponse> Handle(GetPriceQuery request,
             CancellationToken cancellationToken)
         {
-            Guid id = request.InstrumentId;
+            Guid id = request.AssetId;
 
             if (!_priceStore.IsTracked(id.ToString()))
                 await _priceSubscription.StartSubscription(id);
@@ -30,6 +30,7 @@ namespace MarketPrices.Application.Prices.Queries.GetPrice
             {
                 //return latest historical price from api if not tracked
                 var latestPrice = await _fintachartsService.GetLatestPriceAsync(id);
+
                 return new PriceResponse(id, latestPrice.Open, latestPrice.Timestamp);
             }
 

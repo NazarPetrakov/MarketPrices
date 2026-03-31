@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace MarketPrices.Application.Assets.Commands.SeedAssets
+namespace MarketPrices.Application.UseCases.Assets.Commands.SeedAssets
 {
     public record SeedAssetsCommand : IRequest
     {
