@@ -1,5 +1,6 @@
 ﻿using MarketPrices.Application.Abstracts;
 using MarketPrices.Application.Models.Fintacharts;
+using MarketPrices.Domain.Exceptions;
 using MarketPrices.Infrastructure.Fintacharts.Instument;
 using MarketPrices.Infrastructure.Fintacharts.Price;
 
@@ -20,7 +21,7 @@ namespace MarketPrices.Infrastructure.Fintacharts.Services
             var priceResponse = await _httpClient.GetCountBackAsync(queryParams);
 
             var bar = priceResponse.Data.FirstOrDefault()
-                ?? throw new Exception("Price not found");
+                ?? throw new PriceNotFoundException(instrumentId);
 
             return new BarPrice(bar.Timestamp, bar.Open, bar.High, bar.Low, bar.Close, bar.Volume);
         }

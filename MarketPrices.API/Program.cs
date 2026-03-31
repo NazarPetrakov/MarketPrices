@@ -1,5 +1,6 @@
+using MarketPrices.API.Middleware;
 using MarketPrices.Application;
-using MarketPrices.Application.Assets.Commands.SeedAssets;
+using MarketPrices.Application.UseCases.Assets.Commands.SeedAssets;
 using MarketPrices.Infrastructure;
 using MarketPrices.Presentation;
 using MediatR;
@@ -9,10 +10,11 @@ var builder = WebApplication.CreateBuilder(args);
 
 var configuration = builder.Configuration;
 
-builder.Services.AddOpenApi();
-
 var presentationAssembly = typeof(AssemblyReference).Assembly;
 builder.Services.AddControllers().AddApplicationPart(presentationAssembly);
+
+builder.Services.AddOpenApi();
+builder.Services.AddTransient<ExceptionHandlingMiddleware>();
 
 builder.Services
     .AddApplication()
@@ -29,6 +31,8 @@ if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
 }
+
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 app.UseHttpsRedirection();
 
