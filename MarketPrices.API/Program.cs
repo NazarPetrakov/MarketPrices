@@ -43,7 +43,9 @@ app.MapControllers();
 using (var scope = app.Services.CreateScope())
 {
     var sender = scope.ServiceProvider.GetRequiredService<ISender>();
+    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
 
+    db.Database.EnsureCreated();
     await sender.Send(new SeedAssetsCommand());
 }
 
